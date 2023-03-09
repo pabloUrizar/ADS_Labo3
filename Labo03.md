@@ -33,7 +33,7 @@ stderr will be redirected to stdout so both will be displayed in the command pro
 
 > c. ./out 2>&1 >/dev/null | grep –i eeeee
 
-stderr will be redirected to stdout but it does not change anything because stderr was alread directed to the command prompt output. Then, only the lines that contain "eeeee" will be displayed.
+stderr will be redirected to stdout but it does not change anything because stderr was already directed to the command prompt output. Then, only the lines that contain "eeeee" will be displayed.
 
 ### 3. Write commands to perform the following tasks:
 
