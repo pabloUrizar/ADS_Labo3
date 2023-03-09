@@ -4,6 +4,8 @@ Authors: Vincent Peer, Pablo Urizar
 
 Date: March 9, 2023
 
+## Task 1: Exercises on redirection
+
 ### 1. Run the following commands and tell where stdout and stderr are redirected to.  
 > a. ./out > file  
 
@@ -36,6 +38,14 @@ stderr will be redirected to stdout so both will be displayed in the command pro
 stderr will be redirected to stdout but it does not change anything because stderr was already directed to the command prompt output. Then, only the lines that contain "eeeee" will be displayed.
 
 ### 3. Write commands to perform the following tasks:
+> a. Produce a recursive listing, using ls , of files and directories in your
+home directory, including hidden files, in the file /tmp/homefileslist .
+
+ls -Rla ~ > /tmp/homefileslist
+
+> b. Produce a (non-recursive) listing of all files in your home directory whose names end in .txt , .md or .pdf , in the file /tmp/homedocumentslist . The command must not display an error message if there are no corresponding files.
+
+
 
 ## Task 2: Log analysis
 
