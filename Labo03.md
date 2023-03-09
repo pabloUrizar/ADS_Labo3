@@ -18,6 +18,14 @@ e. ./out &> file
 > stdout and stderr are both redirected to the file.   
 
 2. What do the following commands do?
+  a. cat /usr/share/doc/nano/README | grep -i edit
+  It will display the lines that contain the word "edit" in the provided README file
+
+  b. ./out 2>&1 | grep –i eeeee
+  stderr will be redirected to stdout so both will be displayed in the command prompt. From the obtained result, we will keep only the lines that contain "eeeee".
+  
+  c. ./out 2>&1 >/dev/null | grep –i eeeee
+  stderr will be redirected to stdout but it does not change anything because stderr was alread directed to the command prompt output. Then, only the lines that contain "eeeee" will be displayed.
 
 3. Write commands to perform the following tasks:
 
