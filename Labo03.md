@@ -25,7 +25,7 @@ stdout and stderr are both redirected to the file.
 ### 2. What do the following commands do?
 > a. cat /usr/share/doc/nano/README | grep -i edit
 
-It will display the lines that contain the word "edit" in the provided README file
+It will display the lines that contain the word "edit" in the provided README file.
 
 > b. ./out 2>&1 | grep –i eeeee
 
