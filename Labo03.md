@@ -51,3 +51,20 @@ ls -Rla ~ > /tmp/homefileslist
 
 
 ## Task 3: Conversion to CSV
+> Extract all dates from the log file
+
+```bash
+grep -oE '\[[0-9]{2}/[A-Za-z]{3}/[0-9]{4}' ads_website.log | cut -c 2-12 > dates.txt
+```
+
+> Sort dates first by year, then by me, and finally by day
+
+```bash
+sort -t'/' -k3 -k2M -k1 dates.txt > dates_tries.txt
+```
+
+> Count the occurrences of each date and save them to an access.csv file
+
+```bash
+cat dates_tries.txt | uniq -c | awk '{print $2","$1}' > access.csv
+```
