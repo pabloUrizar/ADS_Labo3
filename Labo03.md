@@ -57,14 +57,20 @@ ls -Rla ~ > /tmp/homefileslist
 grep -oE '\[[0-9]{2}/[A-Za-z]{3}/[0-9]{4}' ads_website.log | cut -c 2-12 > dates.txt
 ```
 
+The flag "o" will only print the matched (non-empty) parts of a matching line. The flag "E" is needed for our regular expression to keep only the dates.
+
 > Sort dates first by year, then by me, and finally by day
 
 ```bash
 sort -t'/' -k3 -k2M -k1 dates.txt > dates_tries.txt
 ```
 
+The "t" flag is needed because the separator that we use for the dates is "/". The "m" flag is used to sort by month.
+
 > Count the occurrences of each date and save them to an access.csv file
 
 ```bash
 cat dates_tries.txt | uniq -c | awk '{print $2","$1}' > access.csv
 ```
+
+The command "awk" is used to concatenate the result of our previous commands separated by a comma. The command "uniq" with the "c" flag, prefix lines by the number of occurrences. That means that "$1" corresponds to the number of occurrences and "$2" corresponds to the date. In our CSV file we decided to first have the date and next to each date have its number of occurrences.
