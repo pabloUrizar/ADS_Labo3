@@ -27,15 +27,15 @@ stdout and stderr are both redirected to the file.
 ### 2. What do the following commands do?
 > a. cat /usr/share/doc/nano/README | grep -i edit
 
-It will display the lines that contain the word "edit" in the provided README file. The -i ignore case distinctions in patterns and input data.
+It will display the lines that contain the word "edit" in the provided README file. The -i option ignore case distinctions in patterns and input data. So each 'edit' word will match, whether there are lowercase or uppuercase dosen't impact the result. 
 
 > b. ./out 2>&1 | grep –i eeeee
 
-stderr will be redirected to stdout so both will be displayed in the command prompt. From the obtained result, we will keep only the lines that contain "eeeee".
+stderr will be redirected to stdout so both will be displayed in the command prompt. Then we search for a line containing the sequence 'eeeee' with or without any 'E' due to the -i.Nothing is found so there is no result.
 
 > c. ./out 2>&1 >/dev/null | grep –i eeeee
 
-stderr will be redirected to stdout but it does not change anything because stderr was already directed to the command prompt output. Then, only the lines that contain "eeeee" will be displayed.
+stderr will be redirected to stdout so to the command prompt output. Then, stdout is redirected to the file /dev/null. Each 'E' without any 'O' are printed on command prompt and each 'O' printed in the null file. As the grep functions searches for matches in the command promt, the 'EEEEE' is a match and print as result.
 
 ### 3. Write commands to perform the following tasks:
 > a. Produce a recursive listing, using ls , of files and directories in your
@@ -43,8 +43,10 @@ home directory, including hidden files, in the file /tmp/homefileslist .
 
 ls -Rla ~ > /tmp/homefileslist
 
-> b. Produce a (non-recursive) listing of all files in your home directory whose names end in .txt , .md or .pdf , in the file /tmp/homedocumentslist . The command must not display an error message if there are no corresponding files.
+ls -R -a /home > /tmp/homedocumentslist
 
+> b. Produce a (non-recursive) listing of all files in your home directory whose names end in .txt , .md or .pdf , in the file /tmp/homedocumentslist . The command must not display an error message if there are no corresponding files.
+ls -a /home | egrep '(.txt$)|(.md$)|(.pdf$)' > /tmp/homedocumentslist
 
 
 ## Task 2: Log analysis
