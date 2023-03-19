@@ -2,7 +2,7 @@
 
 Authors: Vincent Peer, Pablo Urizar
 
-Date: March 9, 2023
+Date: March 19, 2023
 
 ## Task 1: Exercises on redirection
 
