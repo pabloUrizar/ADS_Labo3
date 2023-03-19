@@ -175,7 +175,7 @@ grep -oE '\[[0-9]{2}/[A-Za-z]{3}/[0-9]{4}' ads_website.log | cut -c 2-12 > dates
 
 The flag "o" will only print the matched (non-empty) parts of a matching line. The flag "E" is needed for our extended regular expression to keep only the dates.
 
-In the logs file, dates are sorted with a chronological order, if it wasn't the case, we could sort these dates with de following command:
+In our case, dates are sorted with a chronological order, if it wasn't the case, we could sort these dates with de following command:
 > Sort dates first by year, then by month, and finally by day
 
 ```bash
@@ -190,7 +190,7 @@ The "t" flag is needed because the separator that we use for the dates is "/". T
 cat dates_tries.txt | uniq -c | awk '{print $2","$1}' | sed '1 i\Dates,Occurences' > access.csv
 ```
 
-The command "awk" is used to concatenate the result of our previous commands separated by a comma. The command "uniq" with the "c" flag, prefix lines by the number of occurrences. That means that "$1" corresponds to the number of occurrences and "$2" corresponds to the date. The sed command is used to add a header as title on 1st line for the information on the following lines. In our CSV file we decided to first have the date and next to each date have its number of occurrences.  
+The command "awk" is used to concatenate the result of our previous commands separated by a comma. The command "uniq" with the "c" flag, prefix lines by the number of occurrences. That means that "$1" corresponds to the number of occurrences and "$2" corresponds to the date. The sed command is used to add a header as title on 1st line for the information about the csv data. In our CSV file we decided to first have the date and next to each date have its number of occurrences.  
 
 First lines of the result:  
 Dates,Occurences  
@@ -200,5 +200,5 @@ Dates,Occurences
 10/Feb/2021,9  
 ...  
 
-Plot of the result:
+Plot of the result:  
 ![plot_lab1part3](plot_lab1part3.png)
