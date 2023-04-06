@@ -1,28 +1,33 @@
 
-# ADS Lab 04 - Scripting  
-## author: Pablo Urizar, Vincent Peer  
-## date: March 30, 2023  
+# ADS Lab 04 - Scripting
+### Authors: Pablo Urizar and Vincent Peer  
+### Date: March 30, 2023  
+
+---  
 
 
-password for lab5: fBAW3g&jnH8&
+
+
+password for lab5 session: fBAW3g&jnH8&
 
 
 
 ## Task 2: Create thumbnails  
-### Image dimensions  
-With the following command:
-> identify -format 'width: %w, height: %h, size: %B bytes\n' image.jpg  
-
-We obtain these results for cours.jpg, mur.jpg and yparc.png:
-```
-width: 2500, height: 1667, size: 286786B
-width: 2501, height: 1667, size: 4076944 bytes
-width: 1200, height: 800, size: 918440 bytes
-```  
 
 ### Show dimensions script
+>Write a script called show_dimensions that loops through all the picture files
+and shows for each its name and its dimensions. For the loop use the for .. in
+.. do .. done control structure.  
+
 ```  
 #!/bin/bash
+#
+# Description : Print the name of each picture in the lab04_raw_files directory, followed by its dimensions. Picture extension should be .png or -jpg. Dimensions are width and height.
+#
+# Authors : Pablo Urizar, Vincent Peer
+#
+# Date : 06.04.2023
+
 
 path=lab04_raw_files
 cd $path
@@ -34,8 +39,21 @@ done
 ```  
 
 ### Rename pictures script
+>Write a script called rename_pictures that produces picture files that have
+the dimensions in their name. For example if a picture is called building.jpg
+and has a width of 1024 and a height of 768 pixels the script should create a
+file building_1024_768.jpg . The script should not modify the original files,
+but create new ones.
+
 ```
 #!/bin/bash
+#
+# Description : Renames each picture with png or jpg extention. The resulting name is the  name followed by the width and the height of this picture.
+#
+# Authors : Pablo Urizar, Vincent Peer
+#
+# Date : 06.04.2023
+
 
 
 rm -rf renamed_pictures
