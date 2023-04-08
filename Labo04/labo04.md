@@ -64,14 +64,42 @@ cd lab04_raw_files
 for picture in *.png *.jpg
 do
         picture_ext=${picture##*.}
-        basename=${picture%%[.]*}
+        name=${picture%%[.]*}
         dimension=$(identify -format '%w_%h' $picture)
-        filename=${basename}_${dimension}.${picture_ext}
+        filename=${name}_${dimension}.${picture_ext}
 
         echo "new name : $filename"
         cp $picture ../renamed_pictures/${filename}
 done
 ```
+
+### Make thumbnails script
+```
+convert -geometry 300#!/bin/bash
+#
+# Description :
+#
+#Authors : Pablo Urizar, Vincent Peer
+#
+# Date : 06.04.2023
+
+
+path=lab04_raw_files
+cd $path
+
+for file in *.png *.jpg
+do
+        ext=${file##*.}
+        name=${file%%.*}
+        if [ ${name##*_} = "thumb" ]
+        then
+                echo "$name is already a thumbnail"
+        else
+                convert -geometry 300 $file ${name}_thumb.${ext}
+        fi
+done
+```
+
 
 ## Task 3: Generate HTML file
 
