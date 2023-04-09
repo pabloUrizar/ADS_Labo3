@@ -1,15 +1,9 @@
 
 # ADS Lab 04 - Scripting
 ### Authors: Pablo Urizar and Vincent Peer  
-### Date: March 30, 2023  
+### Date: April 09, 2023  
 
 ---  
-
-
-
-
-password for lab5 session: fBAW3g&jnH8&
-
 
 
 ## Task 2: Create thumbnails  
@@ -22,21 +16,21 @@ and shows for each its name and its dimensions. For the loop use the for .. in
 ```  
 #!/bin/bash
 #
-# Description : Print the name of each picture in the lab04_raw_files directory, followed by its dimensions. Picture extension should be .png or -jpg. Dimensions are width and height.
+# Description : Prints the name of each picture in the lab04_raw_files directory followed by its dimensions. Picture extension should be .png or .jpg. Dimensions are width and height.
 #
 # Authors : Pablo Urizar, Vincent Peer
 #
-# Date : 06.04.2023
+# Date : 09.04.2023
 
 
-path=lab04_raw_files
-cd $path
+cd lab04_raw_files
 
 for file in *.png *.jpg
 do
         echo -e $(identify -format '%f width: %w, height: %h' $file)
 done
 ```  
+
 
 ### Rename pictures script
 >Write a script called rename_pictures that produces picture files that have
@@ -48,19 +42,20 @@ but create new ones.
 ```
 #!/bin/bash
 #
-# Description : Renames each picture with png or jpg extention. The resulting name is the  name followed by the width and the height of this picture.
+# Description : Renames each picture with png or jpg extention. The resulting name is the  name followed by the width and the height of this picture and these new files are placed in a
+ new directory named renamed_pictures.
 #
 # Authors : Pablo Urizar, Vincent Peer
 #
-# Date : 06.04.2023
-
-
-
-rm -rf renamed_pictures
-mkdir renamed_pictures
+# Date : 09.04.2023
 
 cd lab04_raw_files
 
+# Removes the directory and creates a new one
+rm -rf renamed_pictures
+mkdir renamed_pictures
+
+# Add dimensions in the picture's name
 for picture in *.png *.jpg
 do
         picture_ext=${picture##*.}
@@ -69,17 +64,18 @@ do
         filename=${name}_${dimension}.${picture_ext}
 
         echo "new name : $filename"
-        cp $picture ../renamed_pictures/${filename}
+        cp $picture renamed_pictures/${filename}
 done
-```
+```  
+To prevent any accumulation in the name when running several time this script, it 
+ will remove the renamed_pictures directory, rename each picture and save it in the new renamed_pictures directory placed in lab04_raw_files. 
 
 ### Make thumbnails script
 ```
 #!/bin/bash
 #
-# Description : Converts png and jpg pictures into thumbnails. Converts a pdf file into png picture
-#               with the first page of the file.
-#
+# Description : Converts png and jpg pictures into thumbnails. Converts a pdf file into png picture with the first page of the file.
+#               
 #Authors : Pablo Urizar, Vincent Peer
 #
 # Date : 09.04.2023
@@ -158,3 +154,7 @@ cat ../lab04_template/template_end.html >> ${html_page_rel_path}
 
 ## Task 4: Use SSH Tunneling
 
+SSH command :  
+> ssh ads.iict.ch -L 5454:localhost:3306
+-L allows to bind port from remote to local.  
+![sql](sql.png)
