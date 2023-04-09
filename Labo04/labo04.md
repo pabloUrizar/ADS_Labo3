@@ -75,25 +75,30 @@ done
 
 ### Make thumbnails script
 ```
-convert -geometry 300#!/bin/bash
+#!/bin/bash
 #
-# Description :
+# Description : Converts png and jpg pictures into thumbnails. Converts a pdf file into png picture
+#               with the first page of the file.
 #
 #Authors : Pablo Urizar, Vincent Peer
 #
-# Date : 06.04.2023
+# Date : 09.04.2023
 
 
 path=lab04_raw_files
 cd $path
 
-for file in *.png *.jpg
+for file in *.png *.jpg *.pdf
 do
         ext=${file##*.}
         name=${file%%.*}
-        if [ ${name##*_} = "thumb" ]
+
+        if [ "${name##*_}" = "thumb" ]
         then
                 echo "$name is already a thumbnail"
+        elif [ "$ext" = "pdf" ]
+        then
+                convert -geometry 300 ${file}[0] ${name}_thumb.png
         else
                 convert -geometry 300 $file ${name}_thumb.${ext}
         fi
