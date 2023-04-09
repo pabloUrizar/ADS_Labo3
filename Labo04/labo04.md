@@ -107,6 +107,54 @@ done
 
 
 ## Task 3: Generate HTML file
+```
+#!/bin/bash
+
+path=raw_files
+html_page_rel_path=../page.html
+
+
+cat /home/lab5/public_html/lab04_template/template_begin.html > page.html
+
+
+cd $path
+
+for file in *.png *.jpg
+do
+        ext=${file##*.}
+        name=${file%%.*}
+
+        echo "<div class=\"col-md-6 col-xs-12\">" \
+                "<a href=\"${path}/${file}\"><img class=\"vignette\"" \
+                "src=\"raw_files/thumbnails/${name}_thumb.${ext}\" /></a>" \
+                "</div>" >> ${html_page_rel_path}
+done
+
+
+echo "</div></div>" >> ${html_page_rel_path}
+echo "<div class=\"row\" style=\"margin-top: 40px;\">" \
+        "<div class=\"col-md-10 col-md-pull-3 col-md-offset-4 article__content\">" \
+        "<div>" \
+        "<div><h2>Téléchargez nos brochures</h2></div>" \
+        "</div>" \
+        "<div class=\"row\">" >> ${html_page_rel_path}
+
+for file in *.pdf
+do
+        name=${file%%.*}
+
+        echo "<div class=\"col-md-6 col-xs-12\">" \
+                "<a href=\"${path}/${file}\">" \
+                "<img class=\"vignette\" src=\"raw_files/thumbnails/${name}_thumb.png\" />" \
+                "</a>" \
+                "</div>" >> ${html_page_rel_path}
+done
+
+
+echo "</div></div></div>" >> ${html_page_rel_path}
+
+cat ../lab04_template/template_end.html >> ${html_page_rel_path}
+```
 
 ## Task 4: Use SSH Tunneling
 
