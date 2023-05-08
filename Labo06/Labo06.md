@@ -89,25 +89,29 @@ find * -type f -exec grep -l 'root' {} \;
 #!/bin/bash
 
 
-if [[ $# -ne 1 ]]  
-then  
-        echo "Error: missing argument. Please specify a directory" >&2  
-        exit  1  
-elif ! find . -name "$1" -type d | grep .  
-then  
-        echo "Not a valid directory" >&2  
-        exit 1
-else  
-        echo "The following files/directories are world-writable:"  
-        find "$1" -perm -a+w  
-fi  
-  
-echo "Do you want the permissions to be fixed (y/n)?"  
-read response  
+if [[ $# -ne 1 ]]
+then
+        echo "Error: missing argument. Please specify a directory" >&2
+        exit  1
 
-if [[ "${response}" == "yes" || "${response}" == "y" ]]  
-then  
-        echo "Ok on va corriger"  
-else  
-        echo "Ok on laisse comme ca"  
-fi  
+#elif ! find . -name "$1" -type d | grep . > /dev/null
+elif [[ ! -d "$1" ]]
+then
+        echo "Invalid directory" >&2
+        exit 1
+
+else
+        echo "The following files/directories are world-writable:"
+        find "$1" -perm -o+w
+fi
+
+echo "Do you want the permissions to be fixed (y/n)?"
+read response
+
+if [[ "${response}" == "y" || "${response}" == "yes" ]]
+then
+        echo "Ok on va corriger"
+        find "$1" -perm -o+w -exec chmod o-w {} \;
+else
+        echo "Ok on laisse comme ca"
+fi
