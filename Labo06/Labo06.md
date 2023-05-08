@@ -88,15 +88,26 @@ find * -type f -exec grep -l 'root' {} \;
 ## Script de Vincent en progression:
 #!/bin/bash
 
-if [[ $# -ne 1 ]]  
-then  
-        echo "Error: missing argument"  
-        echo "Please specify a directory"  
-        echo  1  
-elif [[  ]]  
 
+if [[ $# -ne 1 ]]
+then
+        echo "Error: missing argument. Please specify a directory" >&2
+        exit  1
+elif ! find . -name "$1" -type d | grep .
+then
+        echo "Not a valid directory"
+        exit 1
+else
+        echo "The following files/directories are world-writable:"
+        find $1 -perm -a+w
+fi
 
-echo "The following files/directories are world-writable:"  
+echo "Do you want the permissions to be fixed (y/n)?"
+read response
 
-
-find test_dir/ -perm -a+w  
+if [[ "${response}" = "yes" ]]
+then
+        echo "Ok on va corriger"
+else
+        echo "Ok on laisse comme ca"
+fi 
