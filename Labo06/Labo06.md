@@ -33,23 +33,6 @@ execute the file.
 
 > ~/.bashrc
 
-
-## Script de Vincent en progression:
-#!/bin/bash
-
-if [[ $# -ne 1 ]]
-then
-        echo "Error: missing argument"
-        echo "Please specify a directory"
-        echo  1
-elif [[  ]]
-
-
-echo "The following files/directories are world-writable:"
-
-
-find test_dir/ -perm -a+w
-
 > ~/.bash_history
 
 
@@ -99,3 +82,21 @@ Display all the directories in your home directory that are called .git (probabl
 find . -type f -exec grep -l 'root' {} \;
 find * -type f -exec grep -l 'root' {} \;
 ```
+
+
+
+## Script de Vincent en progression:
+#!/bin/bash
+
+if [[ $# -ne 1 ]]
+then
+        echo "Error: missing argument"
+        echo "Please specify a directory"
+        echo  1
+elif [[  ]]
+
+
+echo "The following files/directories are world-writable:"
+
+
+find test_dir/ -perm -a+w
