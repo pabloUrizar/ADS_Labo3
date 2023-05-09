@@ -121,3 +121,6 @@ then
 else  
   echo "Offending permissions unchanged"  
 fi  
+
+echo "The following files/directories are writable for groups:"  
+find "$1" ! -group $USER -perm -g+w  
