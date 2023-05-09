@@ -85,7 +85,8 @@ find * -type f -exec grep -l 'root' {} \;
 
 
 
-## Script de Vincent en progression:  
+## Script task 2-4:  
+```
 #!/bin/bash  
 #  
 # Description : Display world-writable files for a specific directory. A world-writable file is a file with the write bit set for others. 
@@ -94,29 +95,29 @@ find * -type f -exec grep -l 'root' {} \;
 # Authors : Pablo Urizar, Vincent Peer  
 #  
 # Date : 09.05.2023  
-  
+```
 
 if [[ $# -ne 1 ]]  
 then  
-        echo "Error: missing argument. Please specify a directory" >&2  
-        exit  1  
+  echo "Error: missing argument. Please specify a directory" >&2  
+  exit  1  
   
 elif [[ ! -d "$1" ]]  
 then  
-        echo "Invalid directory" >&2  
-        exit 1  
+  echo "Invalid directory" >&2  
+  exit 1  
   
 else  
-        echo "The following files/directories are world-writable:"  
-        find "$1" -perm -o+w  
+  echo "The following files/directories are world-writable:"  
+  find "$1" -perm -o+w  
 fi   
   
 read -p "Do you want the permissions to be fixed (y/n)?" response  
   
 if [[ "${response}" == "y" || "${response}" == "yes" ]]  
 then  
-        find "$1" -perm -o+w -exec chmod o-w {} \;  
-        echo "Offending permissions have been removed"  
+  find "$1" -perm -o+w -exec chmod o-w {} \;  
+  echo "Offending permissions have been removed"  
 else  
-        echo "Offending permissions unchanged"  
+  echo "Offending permissions unchanged"  
 fi  
