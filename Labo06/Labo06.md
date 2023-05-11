@@ -175,7 +175,7 @@ $ mkdir /home/lab6/shared
 
 Set the group owner of the directory created before to `proj_a` :
 ```sh
-$ sudo chgrp proj_a ~/shared
+$ chgrp proj_a ~/shared
 ```
 
 Remove read, write, and execute permissions to the directory `/home/lab6/shared` :
@@ -190,7 +190,7 @@ $ chmod g+rw ~/shared
 
 Add `lab5` to the `proj_a` group in order to have read and write permissions to the directory :
 ```sh
-sudo usermod -aG proj_a lab5
+usermod -aG proj_a lab5
 ```
 
 
