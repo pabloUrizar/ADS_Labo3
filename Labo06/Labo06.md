@@ -2,17 +2,18 @@
 
 Authors: Vincent Peer, Pablo Urizar
 
-Date: May the 4th, 2023
+Date: May the 13th, 2023
 
 ## Task 1: Exercises
 
-### Interpreting account and group information 
+### **Interpreting account and group information** 
 > What is your UID and what is your account name?
 
 ```sh
 $ id
-uid=1007(lab6) gid=1011(lab6) groups=1011(lab6),1012(proj_a),1013(proj_b)
+uid=1007(lab6) gid=1011(lab6) groups=1011(lab6),1012(proj_a),1013(proj_b)  
 ```
+UID is 1007 and the account name is lab6.
 
 > What is the GID of your primary group ("groupe principal") and what is its
 name? 
@@ -22,8 +23,9 @@ $ id -g
 1011
 
 $ id -gn
-lab6
+lab6  
 ```
+GID is 1011 and its name is lab6.
 
 > How many other groups are you a member of?
 
@@ -31,8 +33,9 @@ lab6
 $ id -G | wc -w
 3
 ```
+3 groups in total, so 2 other groups from the primary.
 
-### Interpreting access control metadata on files and directories
+### **Interpreting access control metadata on files and directories**
 
 1. For the following files, determine who is the owner, which group owns the file
 and characterize the group of people who can read, who can write and who can
@@ -88,7 +91,7 @@ $ ls -l ~/.bash_history
 2. Examine the permissions of your home directory (what option do you have to pass
 to ls to examine the permissions of directories?).
 
-We can use `ls` with the `- ld` option.
+We can use `ls` with the `-ld` option to list details for the directory itself.
 
 > Who is the owner and which is the owning group?
 
@@ -109,14 +112,23 @@ drwxr-xr-x 4 lab6 lab6 4096 May  4 15:32 /home/lab6
 
 3. What permissions allow you to create files in the /tmp directory?
 
-To only create files in the `/tmp` directory we would need write permissions. Everyone has full access to it:
+As the `/tmp` directory has write permissions for others, we can create files in it:
 ```sh
 $ ls -ld /tmp
 drwxrwxrwt 14 root root 20480 May 11 10:15 /tmp
 ```
 
 
-### Modifying access rights
+### **Modifying access rights**
+1. Using chmod in symbolic mode, create the following configurations (from
+initial configuration "600" == rw- --- ---):  
+(With each line configured as rw- --- --- as initial configuration)  
+rw- r-- ---  &emsp; &rarr; &emsp; chmod g+r file  
+rwx r-x ---  &emsp; &rarr; &emsp; chmod u+x,g+rx file  
+r-- r-- r--  &nbsp; &emsp; &rarr; &emsp; chmod a=r file  
+rwx r-- r--  &emsp; &rarr; &emsp; chmod u+x,a+r file   
+rwx --- ---  &emsp; &rarr; &emsp; chmod u+x file
+
 
 2. Conflicting permissions - Create a file (you are going to be the owner) where
 the permissions are configured to not allow the owner or the group to write to the file, but allow the other users to write to the file. What does the OS do if you try to write to this file?
@@ -131,8 +143,9 @@ $ chmod o+w test.txt
 $ echo "test" > test.txt
 -bash: test.txt: Permission denied
 ```
+We can only read the content.
 
-### Giving other users access to your files
+### **Giving other users access to your files**
 
 1. Is your colleague able to read the files in your home directory? If yes, why?
 If no, why not?
@@ -142,12 +155,13 @@ $ ls -ld /home/lab5
 drwxr-xr-x 7 lab5 lab5 4096 May  9 14:41 /home/lab5
 ```
 
-From the user `lab6`, we have read and execute permissions to the home directory of `lab5`. So yes, we can read `lab5` files from `lab6` user.
+From the user `lab6` (other), we have read and execute permissions to the home directory of `lab5`. So yes, we can read `lab5` files from `lab6` user.
 
 2. What do you need to do so that your colleague (and maybe others) can read your
 files? What do you need to do so that nobody else can read your files?
 
-We could create a group and include in it every person that we would like to have read permissions to our home directory and exlude every other user.
+Everybody can already read files so we have nothing more to do.  
+To restrict permissions, we could create a group and include in it every person that we would like to have read permissions to our home directory and exlude every other user.
 
 ```sh
 $ sudo groupadd lab6_read
@@ -159,11 +173,11 @@ Then add every user that we want to have access to our home directory with :
 sudo usermod -aG lab6_read user1
 ```
 
-Finally we remove read permissions to others :
+Finally we remove permissions to others :
 ```sh
-$ chmod o-r /home/lab6
+$ chmod -R o-rwx /home/lab6
 ```
-
+If we want that nobody else can read our files, we can directly use this last command without creating a group.
 
 3. In your home directory create a directory named shared . By using the commands chmod and chgrp configure the directory in such a way that only your colleague is able to read the directory and its files. You can use the groups proj_a and proj_b . Both you and your colleague are already a member of these
 groups. (For the sake of this exercise, suppose that nobody else is member of this group, only you and your colleague.) Give your colleague also access rights to create new files and modify existing files. What commands did you use?
