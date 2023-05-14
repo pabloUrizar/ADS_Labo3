@@ -4,6 +4,8 @@ Authors: Vincent Peer, Pablo Urizar
 
 Date: May the 13th, 2023
 
+The **lab5** account on the server contains the elements asked for this lab.
+
 ## Task 1: Exercises
 
 ### **Interpreting account and group information** 
@@ -184,27 +186,22 @@ groups. (For the sake of this exercise, suppose that nobody else is member of th
 
 Create the directory :
 ```sh
-$ mkdir /home/lab6/shared
+$ mkdir shared
 ```
 
 Set the group owner of the directory created before to `proj_a` :
 ```sh
-$ chgrp proj_a ~/shared
+$ chgrp proj_a shared
 ```
 
-Remove read, write, and execute permissions to the directory `/home/lab6/shared` :
+Remove permissions for others :
 ```sh
-$ chmod o-rwx /home/lab6/shared
+$ chmod o-rwx shared
 ```
 
-Grant read and write permissions to the members of the group :
+Grant write permission to the members of the group :
 ```sh
-$ chmod g+rw ~/shared
-```
-
-Add `lab5` to the `proj_a` group in order to have read and write permissions to the directory :
-```sh
-usermod -aG proj_a lab5
+$ chmod g+w shared
 ```
 
 
@@ -212,12 +209,12 @@ usermod -aG proj_a lab5
 
 1. What does find do with hidden files or directories?
 
-We need to use the `-a` option to "not ignore entries starting with .", so the hidden files and directories.
+All hidden files and directories are displayed with a recursive display for directories.
 
 2. Using find display all the files in your home directory
 - that end in .c , .cpp or in .sh
 ```sh
-$ find ~ \( -name "*.c" -o -name "*.cpp" -o -name "*.sh" \)
+$ find ~ -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.sh" \)
 /home/lab6/.zsh/gitstatus.sh
 /home/lab6/.zsh/theme-simple.sh
 /home/lab6/.zsh/theme-full.sh
@@ -249,19 +246,19 @@ $ find ~ -type f -executable
 
 - that have not been modified since more than two years
 ```sh
-$ find ~ -type f -executable -mtime +730
+$ find ~ -type f -mtime +730
 ```
 
 
 - that have not been accessed since more than two years
 ```sh
-$ find ~ -type f -executable -atime +730
+$ find ~ -type f -atime +730
 ```
 
 
 - that have not been accessed since more than three years and that are bigger than 3 MB (good candidates for cleanup)
 ```sh
-$ find ~ -type f -executable -atime +1095 -size +3M
+$ find ~ -type f -atime +1095 -size +3M
 ```
 
 
@@ -276,44 +273,91 @@ find . -type f -exec grep -l 'root' {} \;
 find * -type f -exec grep -l 'root' {} \;
 ```
 
-The first command is better for our case. The first command indicates to `find` to only perform the search in the current directory and as we know that the current directory has no subdirectories there is no need to use `*` to accomplish the same result but in a recursively way.
+The first command indicates to *find* that it has to use the current directory to look for files that contains the word root. With the *, the shell uses globbing to give every file in the current directory to the find function. The first command using . is probably better because we use entirely the find functionalities and no other as the globbing. Furthermore, hidden files are displayed with this first command, it can be usefull.
 
-## Script task 2-4:  
+## Script task 2-5:  
 ```
-#!/bin/bash  
-#  
-# Description : Display world-writable files for a specific directory. A world-writable file is a file with the write bit set for others. 
-# It additionally suggest to the user to fix this risk by removing this access for others.  
-#  
-# Authors : Pablo Urizar, Vincent Peer  
-#  
-# Date : 09.05.2023  
+#!/bin/bash
+#
+# Description : Display world-writable files for a specific directory. A world-writable file is a file with the write bit set for others.
+# It additionally suggest to the user to fix this risk by removing this access for others. Finally, it displays the group writable files/directories.
+#
+# Authors : Pablo Urizar, Vincent Peer
+#
+# Date : 14.05.2023
 ```
-
+```sh
 if [[ $# -ne 1 ]]  
 then  
-  echo "Error: missing argument. Please specify a directory" >&2  
-  exit  1  
+        echo "Error: missing argument. Please specify a directory" >&2  
+        exit  1  
   
 elif [[ ! -d "$1" ]]  
 then  
-  echo "Invalid directory" >&2  
-  exit 1  
+        echo "Invalid directory" >&2  
+        exit 1  
   
 else  
-  echo "The following files/directories are world-writable:"  
-  find "$1" -perm -o+w  
-fi   
+        echo "The following files/directories are world-writable:"  
+        find "$1" -perm -o+w  
+fi  
   
 read -p "Do you want the permissions to be fixed (y/n)?" response  
   
 if [[ "${response}" == "y" || "${response}" == "yes" ]]  
 then  
-  find "$1" -perm -o+w -exec chmod o-w {} \;  
-  echo "Offending permissions have been removed"  
+        find "$1" -perm -o+w -exec chmod o-w {} \;  
+        echo "Offending permissions have been removed"  
 else  
-  echo "Offending permissions unchanged"  
+        echo "Offending permissions unchanged"  
 fi  
-
+  
 echo "The following files/directories are writable for groups:"  
 find "$1" ! -group $USER -perm -g+w  
+```
+
+## Listing of the test_dir directory
+```
+test_dir:
+total 28
+drwxrwxrwx 3 lab5 lab5   4096 May  4 16:43 a
+drwxrwxr-x 3 lab5 lab5   4096 May  4 16:29 f
+-rwxrwxrwx 1 lab5 lab5     37 May  4 16:28 info.txt
+drwxrwxr-x 2 lab5 proj_a 4096 May  9 14:45 proj_a
+drwxrwxr-x 2 lab5 lab5   4096 May  9 14:30 proj_a2
+drwxrwxr-x 2 lab5 proj_b 4096 May  9 14:23 proj_b
+drwxr-xr-x 2 lab5 lab5   4096 May  9 14:31 proj_b2
+
+test_dir/a:
+total 12
+drwxrwxr-x 2 lab5 lab5 4096 May  4 16:44 b
+-rwxrwxrwx 1 lab5 lab5   31 May  4 16:28 file1
+-rw-rw-rw- 1 lab5 lab5   22 May  4 16:43 file2
+
+test_dir/a/b:
+total 8
+-rw-rw-r-- 1 lab5 lab5 32 May  4 16:28 fileb
+-rw-rw-rw- 1 lab5 lab5 39 May  4 16:44 unprotectedFile
+
+test_dir/f:
+total 8
+-rw-rw-r-- 1 lab5 lab5   25 May  4 16:29 file
+drwxrwxrwx 2 lab5 lab5 4096 May  4 16:30 g
+
+test_dir/f/g:
+total 4
+-rw-rw-rw- 1 lab5 lab5 28 May  4 16:30 file.txt
+
+test_dir/proj_a:
+total 0
+-rw-rw-r-- 1 lab5 proj_a 0 May  9 14:45 README
+
+test_dir/proj_a2:
+total 0
+
+test_dir/proj_b:
+total 0
+
+test_dir/proj_b2:
+total 0
+```
