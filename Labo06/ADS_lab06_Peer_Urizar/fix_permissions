@@ -1,0 +1,37 @@
+#!/bin/bash
+#
+# Description : Display world-writable files for a specific directory. A world-writable file is a file with the write bit set for others.
+# It additionally suggest to the user to fix this risk by removing this access for others. Finally, it displays the group writable files/directories.
+#
+# Authors : Pablo Urizar, Vincent Peer
+#
+# Date : 14.05.2023
+
+
+if [[ $# -ne 1 ]]
+then
+        echo "Error: missing argument. Please specify a directory" >&2
+        exit  1
+
+elif [[ ! -d "$1" ]]
+then
+        echo "Invalid directory" >&2
+        exit 1
+
+else
+        echo "The following files/directories are world-writable:"
+        find "$1" -perm -o+w
+fi
+
+read -p "Do you want the permissions to be fixed (y/n)?" response
+
+if [[ "${response}" == "y" || "${response}" == "yes" ]]
+then
+        find "$1" -perm -o+w -exec chmod o-w {} \;
+        echo "Offending permissions have been removed"
+else
+        echo "Offending permissions unchanged"
+fi
+
+echo "The following files/directories are writable for groups:"
+find "$1" ! -group $USER -perm -g+w

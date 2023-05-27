@@ -1,0 +1,42 @@
+test_dir:
+total 28
+drwxrwxrwx 3 lab5 lab5   4096 May  4 16:43 a
+drwxrwxr-x 3 lab5 lab5   4096 May  4 16:29 f
+-rwxrwxrwx 1 lab5 lab5     37 May  4 16:28 info.txt
+drwxrwxr-x 2 lab5 proj_a 4096 May  9 14:45 proj_a
+drwxrwxr-x 2 lab5 lab5   4096 May  9 14:30 proj_a2
+drwxrwxr-x 2 lab5 proj_b 4096 May  9 14:23 proj_b
+drwxr-xr-x 2 lab5 lab5   4096 May  9 14:31 proj_b2
+
+test_dir/a:
+total 12
+drwxrwxr-x 2 lab5 lab5 4096 May  4 16:44 b
+-rwxrwxrwx 1 lab5 lab5   31 May  4 16:28 file1
+-rw-rw-rw- 1 lab5 lab5   22 May  4 16:43 file2
+
+test_dir/a/b:
+total 8
+-rw-rw-r-- 1 lab5 lab5 32 May  4 16:28 fileb
+-rw-rw-rw- 1 lab5 lab5 39 May  4 16:44 unprotectedFile
+
+test_dir/f:
+total 8
+-rw-rw-r-- 1 lab5 lab5   25 May  4 16:29 file
+drwxrwxrwx 2 lab5 lab5 4096 May  4 16:30 g
+
+test_dir/f/g:
+total 4
+-rw-rw-rw- 1 lab5 lab5 28 May  4 16:30 file.txt
+
+test_dir/proj_a:
+total 0
+-rw-rw-r-- 1 lab5 proj_a 0 May  9 14:45 README
+
+test_dir/proj_a2:
+total 0
+
+test_dir/proj_b:
+total 0
+
+test_dir/proj_b2:
+total 0
