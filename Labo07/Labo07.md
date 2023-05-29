@@ -27,65 +27,67 @@ Files in /etc/skel, so .bash_logout, .bashrc and .profile.
 1. Create the groups jedi and rebels . Before creating them verify that they do not yet exist.
 
 ```sh
-$ grep -e jedi -e rebels /etc/group # Look for existing groups
-$ sudo addgroup jedi
-$ sudo addgroup rebels
+$ grep -e jedi -e rebels /etc/group # Looking for existing groups
+$ sudo groupadd jedi
+$ sudo groupadd rebels
 ```
 
 2. Create the following user accounts with default home directories and login shell (for example account luke should have home directory /home/luke and a bash shell).
 
-```sh
-
-```
-
 > What option do you need to specify to have useradd create a home directory? 
 
-```sh
-
-```
+We need to add the flag -m.
 
 > What is the default login shell for users created with useradd ? What command should we use to change the default login shell from /bin/sh to /bin/bash ?
 
-```sh
-
-```
+The command useradd uses as default login shell a shell defined in /etc/default/useradd specified by the SHELL variables. By default, we have /bin/sh. We can change the login shell with the flag -s /bin/bash to change the login shell with /bin/bash.
 
 Before creating them verify that they do not yet exist.
 
 > Account luke , assigned to groups jedi (principal) and rebels .
 
 ```sh
-
+$ grep -e luke -e vader -e solo /etc/passwd # Looking for existing groups
+$ sudo useradd -g jedi -G rebels -m -s /bin/bash luke
 ```
 
 > Account vader , assigned to group jedi (principal).
 
 ```sh
-
+$ sudo useradd -g jedi -m -s /bin/bash vader
 ```
 
 > Account solo , assigned to group rebels (principal).
 
 ```sh
-
+$ sudo useradd -g rebels -m -s /bin/bash solo
 ```
 
 3. Set a password for the account luke .
 
 ```sh
-
+$ sudo passwd luke
 ```
 
 4. Test the account luke . Verify that the user can log in and create files. Verify that the user cannot access sensitive system information such as the file /etc/shadow .
 
 ```sh
-
+vpeer@VINCENT-PC:/$ su luke
+Password:
+luke@VINCENT-PC:/$ cd /home/luke
+luke@VINCENT-PC:/$ echo "create new file" > file
+luke@VINCENT-PC:~$ cat /etc/shadow
+cat: /etc/shadow: Permission denied
 ```
 
 5. Use su to change your account to that of vader . Test if the user vader has access to the files in the home directory of user luke .
 
 ```sh
-
+luke@VINCENT-PC:/$ su vader
+Password:
+vader@VINCENT-PC:/$ cd home/luke/
+vader@VINCENT-PC:/home/luke$ cat file
+create new file
 ```
 
 ## Task 2: Change group membership
