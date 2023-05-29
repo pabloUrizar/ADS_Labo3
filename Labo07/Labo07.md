@@ -95,27 +95,35 @@ create new file
 >  Create the account leia without assigning it a principal group. After it was created, which principal group did it get assigned?
 
 ```sh
-
+$ sudo useradd leia
+$ id leia
+uid=1004(leia) gid=1005(leia) groups=1005(leia)
 ```
-
+Leia's principal group is leia (the same as her username).
 > Make leia member of the group rebels (as secondary group).
 
 ```sh
-
+$ sudo usermod -G rebels leia
+$ id leia
+uid=1004(leia) gid=1005(leia) groups=1005(leia),1004(rebels)
 ```
 
 > Make leia leave the group rebels and join the group jedi instead.
 
 ```sh
-
+$ sudo usermod -G jedi leia
+$ id leia
+uid=1004(leia) gid=1005(leia) groups=1005(leia),1003(jedi)
 ```
-
+Using the usermod -G feature : [...] If the user is currently a member of a group which is not listed, the user will be removed from the group. [...]
 > Make leia leave any secondary group.
 
 ```sh
-
+$ sudo usermod -G "" leia
+$ id leia
+uid=1004(leia) gid=1005(leia) groups=1005(leia)
 ```
-
+A strategy found on https://unix.stackexchange.com/questions/29570/how-do-i-remove-a-user-from-a-group
 ## Task 3: Give a user sudo rights
 
 Questions:
