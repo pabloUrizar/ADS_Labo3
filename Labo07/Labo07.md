@@ -129,27 +129,40 @@ A strategy found on https://unix.stackexchange.com/questions/29570/how-do-i-remo
 Questions:
 
 a) Which line in /etc/sudoers gives the members of the group sudo the right to execute any command?
+```sh
+# Allow members of group sudo to execute any command
+%sudo   ALL=(ALL:ALL) ALL
+```
+
 
 b) How would you have to modify this line so that users can use sudo without typing a password (this is in general not recommended, but can be handy sometimes).
-
-Perform the following steps and give in the lab report the commands you used.
-
+```sh
+# Allow members of group sudo to execute any command
+%sudo   ALL=(ALL:ALL) NOPASSWD: ALL
+```
+Source: https://linuxtect.com/how-to-run-sudo-command-without-password-with-nopasswd/
 > Give the account luke sudo rights.
 
 ```sh
-
+$ sudo usermod -a -G sudo luke
 ```
 
 > Test the new rights. Verify that luke can read the file /etc/shadow using sudo.
 
 ```sh
-
+luke@VINCENT-PC:~$ sudo cat /etc/shadow
+[sudo] password for luke:
+root:*:19360:0:99999:7:::
+daemon:*:19360:0:99999:7:::
+[...]
 ```
 
 > Remove sudo rights from the account luke.
 
 ```sh
-
+$ sudo deluser luke sudo
+Removing user `luke' from group `sudo' ...
+Done.
 ```
 
 ## Task 4: Remove a user account
