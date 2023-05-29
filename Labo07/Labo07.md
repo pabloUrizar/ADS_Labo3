@@ -168,9 +168,27 @@ Done.
 ## Task 4: Remove a user account
 
 1. Remove the account leia , but do not delete the home directory yet.
-
+```sh
+$ sudo userdel leia
+```
+Leia's account is deleted but her home directory still exsits
 2. Inspect the home directory (look at the file metadata). What has changed?
-
+```sh
+$ sudo ls -la /home/leia
+total 20
+drwxr-x--- 2 1004 1005 4096 May 29 16:14 .
+drwxr-xr-x 7 root root 4096 May 29 16:14 ..
+-rw-r--r-- 1 1004 1005  220 Jan  6  2022 .bash_logout
+-rw-r--r-- 1 1004 1005 3771 Jan  6  2022 .bashrc
+-rw-r--r-- 1 1004 1005  807 Jan  6  2022 .profile
+```
+Files and folders still exist but the owner is represented now with the UID that Leia had.  
 3. Suppose the user leia has created other files on the system, but you do not know where they are. How would you systematically scan the whole system to find them?
-
+```sh
+$ sudo find / -uid 1004
+```
+This command will look from the root for every file where the UID owner is 1004, where 1004 is Leia's ancient uid.  
 4. Remove the home directory manually.
+```sh
+/home$ sudo rm -rf leia
+```
