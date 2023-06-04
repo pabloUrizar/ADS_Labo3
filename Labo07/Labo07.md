@@ -2,9 +2,8 @@
 
 Authors: Vincent Peer, Pablo Urizar
 
-Date: May the 25th, 2023
+Date: June the 4th, 2023
 
-The **lab5** account on the server contains the elements asked for this lab.
 
 ## Task 0: Examine the setup of your own account
 
